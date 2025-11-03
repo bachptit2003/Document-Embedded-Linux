@@ -1,1 +1,0 @@
-# Tích hợp vào Buildroot
