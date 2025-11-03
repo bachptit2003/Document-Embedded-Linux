@@ -1,0 +1,1 @@
+# Thiết lập Root Filesystem
