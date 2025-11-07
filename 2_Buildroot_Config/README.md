@@ -65,12 +65,12 @@ Chúng ta sẽ tạo một nhánh (branch) mới dựa trên phiên bản Buildr
 ```bash
 git checkout -b bootlin 2025.02.6
 ```
-⚙️ Cấu hình Buildroot (Configuring Buildroot)
+### Cấu hình Buildroot (Configuring Buildroot)
 
 Nếu bạn mở thư mục configs/, bạn sẽ thấy có tệp beaglebone_defconfig, đây là một tệp cấu hình Buildroot sẵn sàng để sử dụng nhằm xây dựng hệ thống cho BeagleBone Black Wireless.
 Tuy nhiên, vì chúng ta đang học cách làm việc với Buildroot, nên sẽ bắt đầu tạo một cấu hình mới hoàn toàn từ đầu.
 
-### 🧰 Bắt đầu công cụ cấu hình Buildroot
+### Bắt đầu công cụ cấu hình Buildroot
 Chạy lệnh sau để mở giao diện cấu hình:
 ```bash
 make menuconfig
@@ -78,13 +78,13 @@ make menuconfig
 💡 Ngoài ra, bạn có thể thử các công cụ cấu hình khác như nconfig, xconfig, hoặc gconfig.
 
 Sau khi mở menuconfig , giao diện sẽ như sau:
-![menuconfig](image.png)
+![menuconfig](image-1.png)
 
 Đến đây ta sẽ đi cấu hình từng mục phù hợp với board BeaglbonBlack nhé!!!
 
-🔧 Thực hiện cấu hình từng bước:
+ Thực hiện cấu hình từng bước:
 
-### 1️⃣ Target Options:
+### 1. Target Options:
 - Chúng ta biết rằng BeagleBone Black Wireless là nền tảng ARM (little endian), vì vậy chọn:
 ```bash
 Target Architecture → ARM (little endian)
@@ -106,13 +106,13 @@ Target ABI → EABIhf
 - **VFPv3-D16 cho đơn vị dấu chấm động (FPU)**
 
 - **ARM instruction set cho bộ lệnh (thay vì Thumb-2)**
-![alt text](image-1.png)
+![targetoption](image-2.png)
 
-### 2️⃣ Build Options
+### 2. Build Options
 
 - Không cần thay đổi gì, nhưng bạn có thể tham khảo và đọc phần mô tả (help) cho từng tùy chọn để hiểu rõ hơn.
 
-### 3️⃣ Toolchain
+### 3.Toolchain
 
 - Theo mặc định, Buildroot sẽ tự xây dựng toolchain, nhưng việc này mất nhiều thời gian.
 → Chúng ta sẽ dùng external toolchain (có sẵn).
@@ -133,9 +133,9 @@ Các tùy chọn khác như C library , ... giữ nguyên.
 
 Đây là lựa chọn phù hợp cho BeagleBone Black.
 
-![alt text](image-2.png)
+![toolchain](image.png)
 
-### 4️⃣ System Configuration
+### 4. System Configuration
 
 Trong hệ thống cơ bản này, chưa cần nhiều tùy chỉnh.
 Bạn có thể đặt:
@@ -146,9 +146,9 @@ Bạn có thể đặt:
 
 - Root password (mật khẩu root)
 
-![alt text](image-3.png)
+![systemconfig](image-3.png)
 
-### 5️⃣ Kernel
+### 5.Kernel
 
 Kích hoạt nhân Linux:
 ```bash
@@ -161,13 +161,13 @@ Sử dụng phiên bản cụ thể để đảm bảo tái lập build:
 Kernel version → Custom version
 Custom version → 6.12.47
 ```
-![alt text](image-4.png)
+![kernel](image-4.png)
 
 Chọn cấu hình sẵn (defconfig) trong mã nguồn kernel:
 ```bash
 Defconfig name → omap2plus
 ```
-![alt text](image-5.png)
+![defconfig](image-5.png)
 
 (Vì BeagleBone Black dựa trên dòng TI AM335x, được hỗ trợ trong OMAP2/3/4.)
 
@@ -175,14 +175,14 @@ Giữ định dạng nhị phân mặc định:
 ```bash
 Kernel binary format → zImage
 ```
-![alt text](image-6.png)
+![binaryformat](image-6.png)
 
 Bật Device Tree Blob (DTB):
 ```bash
 [*] Build a Device Tree Blob (DTB)
 In-tree Device Tree Source file names → ti/omap/am335x-boneblack
 ```
-![alt text](image-7.png)
+![dtb](image-7.png)
 
 Kích hoạt OpenSSL cho host:
 ```bash
@@ -191,7 +191,7 @@ Kích hoạt OpenSSL cho host:
 
 Hiển thị dấu * là đã bật nhé, nhấn dấu space để bật nhé.
 
-### 6️⃣ Target Packages
+### 6. Target Packages
 
 - Menu này chứa hơn 3000+ gói Buildroot có thể chọn cài.
 
@@ -199,21 +199,21 @@ Hiển thị dấu * là đã bật nhé, nhấn dấu space để bật nhé.
 
 - Bạn có thể khám phá thêm các gói khác trong các bài lab sau.
 
-![alt text](image-8.png)
+![targetpacket](image-8.png)
 
 Ở đây bạn có thể bật các tool cần dùng cho kernel ví dụ như mosquitto (MQTT) hay là ssh ,.... chẳng hạn.
 
-### 7️⃣ Filesystem Images
+### 7 .Filesystem Images
 
 Giữ tùy chọn mặc định:
 ```bash
 [*] tar the root filesystem
 ```
-![alt text](image-9.png)
+![images](image-9.png)
 
 Việc flash root filesystem vào thẻ SD sẽ được thực hiện ở bước sau.
 
-### 8️⃣ Bootloaders
+### 8. Bootloaders
 
 Chọn U-Boot, bootloader phổ biến nhất cho ARM:
 ```bash
@@ -249,12 +249,12 @@ U-Boot binary format → u-boot.img
 U-Boot SPL binary image name → MLO
 ```
 
-![alt text](image-10.png)
+![bootloading](image-10.png)
 
 ✅ Hoàn tất cấu hình!
 Khi đã thiết lập xong, bạn có thể lưu cấu hình lại và thoát.
 
-## 🏗️ Biên dịch hệ thống (Building)
+##  Biên dịch hệ thống (Building)
 
 Bạn có thể đơn giản chạy lệnh:
 ```bash
@@ -332,7 +332,7 @@ Sau khi đã có đầy đủ các file rồi thì ta sẽ tiến hành copy và
 
 Để hệ thống chạy được trên BeagleBone Black, chúng ta cần chuẩn bị thẻ SD với hai phân vùng riêng biệt:
 
-**🧱 Cấu trúc phân vùng cần có**
+** Cấu trúc phân vùng cần có**
 
 - Phân vùng 1 – Bootloader (FAT32):
 
@@ -354,7 +354,7 @@ Phân vùng này phải tuân thủ quy định của SoC AM335x, nên định d
 
 Sử dụng định dạng ext4.
 
-### 🔍 Xác định thiết bị thẻ SD
+###  Xác định thiết bị thẻ SD
 
 Đầu tiên, hãy xác định tên thiết bị mà hệ thống gán cho thẻ SD của bạn bằng lệnh:
 ```bash
@@ -374,7 +374,7 @@ Nếu bạn dùng đầu đọc SD qua USB, nó sẽ hiển thị dạng:
 ⚠️ Cẩn thận!
 /dev/sda thường là ổ cứng của máy tính, không được nhầm lẫn khi format, vì sẽ mất toàn bộ dữ liệu hệ thống!
 
-### 🧩 Quy ước tên phân vùng
+###  Quy ước tên phân vùng
 
 Nếu thẻ SD của bạn là /dev/mmcblk0,
 thì các phân vùng bên trong sẽ là:
@@ -382,20 +382,20 @@ thì các phân vùng bên trong sẽ là:
 - **/dev/mmcblk0p1   → phân vùng 1 (boot)**
 - **/dev/mmcblk0p2   → phân vùng 2 (rootfs)**
 
-### 🧹 Các bước format thẻ SD
-1️⃣ Tháo (unmount) tất cả phân vùng của thẻ SD
+###  Các bước format thẻ SD
+1. Tháo (unmount) tất cả phân vùng của thẻ SD
 
 Ubuntu thường tự động mount các phân vùng, bạn cần tháo chúng ra trước:
 ```bash
 sudo umount /dev/mmcblk0p*
 ```
-2️⃣ Xóa sạch phần đầu thẻ SD
+2. Xóa sạch phần đầu thẻ SD
 
 Điều này đảm bảo các phân vùng cũ không còn được hệ thống nhận nhầm:
 ```bash
 sudo dd if=/dev/zero of=/dev/mmcblk0 bs=1M count=16
 ```
-3️⃣ Tạo hai phân vùng mới
+3. Tạo hai phân vùng mới
 
 Sử dụng công cụ cfdisk:
 ```bash
@@ -424,7 +424,7 @@ Kiểu (Type): 83 (Linux)
 
 Thoát và lưu thay đổi trong cfdisk
 ```
-4️⃣ Định dạng phân vùng boot (FAT32)
+4. Định dạng phân vùng boot (FAT32)
 ```bash
 sudo mkfs.vfat -a -F 32 -n boot /dev/mmcblk0p1
 ```
@@ -438,7 +438,7 @@ Tham số:
 -n boot → đặt nhãn (label) là boot
 ```
 
-5️⃣ Định dạng phân vùng rootfs (ext4)
+5. Định dạng phân vùng rootfs (ext4)
 ```bash
 sudo mkfs.ext4 -L rootfs -E nodiscard /dev/mmcblk0p2
 ```
@@ -449,7 +449,7 @@ Giải thích:
 
 -E nodiscard: tắt chế độ kiểm tra và loại bỏ block xấu, giúp tăng tốc format đáng kể (vì SD card thường không có bad block thật).
 
-6️⃣ Kiểm tra kết quả
+6. Kiểm tra kết quả
 
 Sau khi hoàn tất, tháo thẻ SD ra và cắm lại — Ubuntu sẽ tự động mount hai phân vùng:
 ```bash
@@ -472,11 +472,11 @@ lsblk
 
 Sau khi đầy đủ rồi, thì rút thẻ nhó ra cắm vào Beaglebon Black để boot nhé! Ta sẽ dùng nguồn 3V3 hoặc 5V để cấp nguồn, cách boot là giữ nút S2 ( nút boot từ thẻ nhớ, nếu không giữ thì mặc định BBB sẽ boot từ eMMC), giữ nút S2 rồi cắm nguồn, theo dõi log qua UART 
 
-![alt text](image-11.png)
+![uarrt](image-11.png)
 
 cắm dây UART như trong ảnh nhé. Sau khi boot thành công thì log sẽ hiện ra kiểu như sau, ví dụ:
 
-![alt text](image-12.png)
+![conssolde](image-12.png)
 Như này là U-boot đã chạy rồi, khi boot vào được đến đây, mình ấn nút space để vào chế độ U-boot shell , ta sẽ tiếp tục cấu hình môi trường để BBB boot tự động cho những lần sau:
 ```bash
 fatload mmc 0:1 0x82000000 zImage
@@ -489,7 +489,7 @@ bootz 0x82000000 - 0x88000000
 Tiếp đó, kernel sẽ chạy:
 
 
-![alt text](image-13.png)
+![logss](image-13.png)
 
 ### Kernel chạy xong là đến phần đăng nhập, ở đây bạn nhập tên user và password đã cài đặt ở phần System Configuration để đăng nhập vào Buildroot là thành công rồi nhé. Như vậy là ta đã hoàn tất việc tạo một distro hoàn chỉnh từ Buildroot cho BBB rồi.
 --- 
@@ -598,7 +598,7 @@ sudo nano Config.in
 ```bash
 source "package/helloworld/Config.in"
 ```
-![alt text](image-15.png)
+![packgaeconfig](image-14.png)
 
  Bước 6: Bật package trong menuconfig, 
  ```bash
@@ -607,7 +607,7 @@ make menuconfig
 
 → Vào Target packages → Miscellaneous ->tìm “helloworld” → chọn [ * ].
 
-![alt text](image-14.png)
+![miscellaneous](image-15.png)
 
  Bước 7: Build lại hệ thống
  ```bash
