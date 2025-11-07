@@ -1,4 +1,4 @@
-# Tài liệu hướng dẫn BeagleBone Black - Hệ thống Buildroot/Yocto Gateway
+# Tài liệu hướng dẫn BeagleBone Black - Hệ thống Buildroot/Yocto 
 Repo này bao gồm hướng dẫn chi tiết cho 5 phần:
 1. Quy trình cài đặt BBB từng phần:
     - Chuẩn bị Cross Toolchain
