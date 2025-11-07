@@ -259,7 +259,7 @@ output/target/lib/modules/<kernel-version>/led_driver.ko
 Ví dụ:
 ```bash
 output/target/lib/modules/6.1.0/led_driver.ko
-```bash
+```
 
 Sau khi copy file từ máy host sang BBB rồi thì nạp driver chạy thử:
 ```bash
