@@ -229,13 +229,13 @@ make DEVICE_TREE=am335x-boneblack
 - **1.4** Sửa lỗi thiếu thư viện, package.
 
 Trong lúc build trên máy mình, mình có gặp lỗi sau, các bạn có thể gặp lỗi khá tương tự
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 Ở đây thì hiểu khá đơn giản là mình đang chưa có thư viện openssl trên máy, do đó ta sẽ phải cài thêm gói.
 ```bash
 sudo apt-get install libssl-dev
 ```
 Nhưng cài thêm bao nhiêu là đủ ? Đó là khi bạn nên kiểm tra tài liệu từ u-boot, với keyword U-boot prerequisites, link tài liệu tại đây: https://docs.u-boot.org/en/stable/build/gcc.html
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 Thừa hơn thiếu, các bạn cài đủ để quá trình compile u-boot diễn ra 1 cách trơn tru.
 
 ✔ - Sau khi build xong, nó sẽ tạo ra 2 file mà ta cần là MLO và u-boot.img.
@@ -291,7 +291,7 @@ ext4 cho rootfs
 - mkfs.ext4 : (make file system – ext4)
 - -L rootfs : label = rootfs . Mình tìm hiểu thì mkfs.ext4 mkfs.vfat lại thuộc 2 bộ công cụ khác nhau nên có cách dùng param hơi khác nhau
 - Okay vậy là xong, giờ khi bạn check bằng lsblk (list block) máy ta sẽ hiển thị như sau
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 ### 3. Copy MLO và u-boot.img vào thẻ nhớ test
 - 3.1 Copy chỉ MLO
@@ -302,7 +302,7 @@ Các bạn copy file MLO vừa build ra vào phân vùng boot trên thẻ nhớ
  sudo cp MLO /media/zk47/boot/
 ```
 Khởi động board, cắm nguồn và giữ nút S2 ta được log sau:
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 Như vậy là ta đã chạy được U-Boot (Bootloader cho BBB rồi).
 
 Dễ thấy, ta đang không cung cấp cho u-boot file u-boot.img, nên nó sẽ lỗi.
@@ -313,7 +313,7 @@ sudo cp u-boot.img /media/zk47/boot/
 ```
 Lần này khởi động board lên ta sẽ thấy nội dung sau
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 **Như vậy là chúng ta đã cài đặt được bootloader để BeagleBon Black boot được từ thẻ nhớ, tiếp theo là chuẩn bị Kernel và Rootfile System nữa là ổn.**
 
@@ -399,7 +399,7 @@ Lưu cấu hình và thoát.
  make install
 ```
 Sau khi chạy xong, nó sẽ xuất hiện các file cần thiết như sau:
-![result](image-9.png)
+![result](./images/image-9.png)
 
 Nếu chưa đủ , ta cần tạo thêm các file quan trọng như sau:
 1. Tạo cấu trúc thư mục :
@@ -499,7 +499,7 @@ Tiếp theo chúng ta sẽ cần phân vùng thẻ nhớ thành 2 vùng như đ�
 +partion1: chứa các file u-boot và kernel
 
 +partion2 : chưa rootfs
-![phanvung](image-10.png)
+![phanvung](./images/image-10.png)
 
 -Định dạng cho phân vùng :
 
@@ -520,7 +520,7 @@ sdb 8:16 1 29,3G 0 disk
 ```
 ### Lưu ý ở phân vùng sdb2 là nơi chứa rootfs , ta cần cố định lại UUID của phân vùng lại để khi kernel chạy , nó sẽ tìm đến đúng địa chỉ của phân vùng để mount rootfs và có thể chạy được, vd của mình UUID là ad7c6562-897f-43dd-a584-d6b3c3fd96d5, để cố định cần chỉnh sửa /etc/fstab.
 
-![chinhsua](image-11.png)
+![chinhsua](./images/image-11.png)
 ```bash
 sudo nano /etc/fstab
 UUID= ad7c6562-897f-43dd-a584-d6b3c3fd96d5 /media/bach/rootfs ext4 defaults, noatime 0 2
@@ -589,7 +589,7 @@ boot
 ```
 
  Theo dõi trên picocom hoặc putty để xem bbb có chạy được linux không. Nếu thành công, log sẽ hiển thị ra như sau:
- ![thanhcong](image-12.png)
+ ![thanhcong](./images/image-12.png)
 
 ### Nếu vào được giao diện như này là chúng ta đã hoàn tất việc tự build một hệ điều hành kernel Linux cho BeagleBon rồi , việc làm như vậy giúp ta hiểu bản chất từng bước hơn , từ đó mà việc học hay là nghiên cứu sâu về Linux cũng dễ dàng hơn.
-### Chúc các bạn thanh công !!!
+### Chúc các bạn thành công !!!
